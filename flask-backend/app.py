@@ -15,9 +15,9 @@ def get_db():
     return db
 
 
-@app.route('/api/v1/access_log', methods=['GET'])
-def access_log():
-    return 'Access Log'
+@app.route('/api/v1/logs', methods=['GET'])
+def access_logs():
+    return 'Access Logs'
 
 
 @app.route('/api/v1/enable_door', methods=['POST'])
@@ -33,6 +33,16 @@ def disable_door():
 @app.route('/api/v1/door_status', methods=['GET'])
 def door_status():
     return 'Door Status'
+
+
+@app.route('/api/v1/cats', methods=['GET'])
+def get_cats():
+    return 'Get Cats'
+
+
+@app.route('/api/v1/cats', methods=['POST'])
+def add_cat():
+    return 'Add Cat'
 
 
 @app.teardown_appcontext
