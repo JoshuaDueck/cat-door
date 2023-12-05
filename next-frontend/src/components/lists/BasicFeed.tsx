@@ -26,7 +26,7 @@ export default function BasicFeed({
                 </div>
                 <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                   <div>
-                    <p className="text-sm text-gray-500">{item.caption}</p>
+                    <p className="text-sm text-gray-800 font-bold">{item.caption}</p>
                   </div>
                   <div className="whitespace-nowrap text-right text-sm text-gray-500">
                     <time dateTime={item.timestamp}>{item.timestamp}</time>

@@ -29,15 +29,15 @@ export default function Home() {
       <div className="flex flex-row justify-between">
         <BasicFeed data={[
           {
-            timestamp: "2021-09-20",
+            timestamp: "2023-12-04",
             caption: "Door Unlocked"
           },
           {
-            timestamp: "2021-09-22",
+            timestamp: "2023-12-04",
             caption: "Door Locked"
           },
           {
-            timestamp: "2021-09-25",
+            timestamp: "2023-12-04",
             caption: "Door Unlocked"
           },
         ]}/>
