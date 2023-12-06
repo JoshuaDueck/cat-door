@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [locked, setLocked] = useState(false);
+
   return (
     <main className="">
       <h2 className="text-xl font-bold">Door Status: {locked ? 'Locked' : 'Unlocked'}</h2>
