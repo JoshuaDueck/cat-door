@@ -12,7 +12,8 @@ CREATE TABLE cats (
 );
 
 CREATE TABLE logs (
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    cat_id INTEGER NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp DATETIME DEFAULT (strftime('%s', 'now')),
+    cat_id INTEGER,
     action TEXT NOT NULL
 );
