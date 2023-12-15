@@ -1,4 +1,5 @@
 from app.extensions import db
+import time
 
 
 class LogEntry(db.Model):
@@ -14,7 +15,7 @@ class LogEntry(db.Model):
     def __json__(self):
         return {
             'id': self.id,
-            'timestamp': self.timestamp,
+            'timestamp': int(time.mktime(self.timestamp.timetuple())),
             'cat_id': self.cat_id,
             'action': self.action
         }
