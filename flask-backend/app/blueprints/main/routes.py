@@ -46,8 +46,6 @@ def scan():
 
     t = threading.Thread(target=open_door)
     t.start()
-    t.join()
-
     return tag
 
 
