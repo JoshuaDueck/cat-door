@@ -4,6 +4,8 @@ from app.models.log_entry import LogEntry
 from app.models.cat import Cat
 from app.extensions import db
 
+import RPi.GPIO as GPIO
+import time
 
 @bp.route('/')
 def index():
@@ -40,5 +42,11 @@ def scan():
     )
     db.session.add(log_entry)
     db.session.commit()
+
+    GPIO.output(26, GPIO.HIGH)
+    print('Door is open!')
+    time.sleep(5)
+    GPIO.output(26, GPIO.LOW)
+    print('Door is closed!')
 
     return tag

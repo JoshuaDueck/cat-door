@@ -6,10 +6,16 @@ from app.extensions import db, migrate
 from app.models.cat import Cat
 from app.models.log_entry import LogEntry
 
+import RPi.GPIO as GPIO
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(26, GPIO.OUT)
 
     # EXTENSIONS
     db.init_app(app)
