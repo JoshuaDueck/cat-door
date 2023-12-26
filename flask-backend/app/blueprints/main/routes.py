@@ -3,6 +3,7 @@ from app.blueprints.main import bp
 from app.models.log_entry import LogEntry
 from app.models.cat import Cat
 from app.extensions import db
+import threading
 
 import RPi.GPIO as GPIO
 import time
@@ -43,10 +44,17 @@ def scan():
     db.session.add(log_entry)
     db.session.commit()
 
+    t = threading.Thread(target=open_door)
+    t.start()
+    t.join()
+
+    return tag
+
+
+def open_door():
     GPIO.output(26, GPIO.HIGH)
     print('Door is open!')
     time.sleep(5)
     GPIO.output(26, GPIO.LOW)
     print('Door is closed!')
 
-    return tag
