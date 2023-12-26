@@ -1,5 +1,7 @@
 from flask import request
 from app.blueprints.main import bp
+from app.models.log_entry import LogEntry
+from app.extensions import db
 
 
 @bp.route('/')
@@ -25,4 +27,12 @@ def lock_door():
 @bp.route('/door/scan', methods=['POST'])
 def scan():
     tag = request.get_json()
+
+    log_entry = LogEntry(
+        cat_id=tag.get('id'),
+        action='scan'
+    )
+    db.session.add(log_entry)
+    db.session.commit()
+
     return tag
