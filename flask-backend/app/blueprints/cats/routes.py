@@ -1,4 +1,7 @@
 from app.blueprints.cats import bp
+from flask import request
+from app.models.cat import Cat
+from app.extensions import db
 
 
 @bp.route('/', methods=['GET'])
@@ -8,7 +11,14 @@ def index():
 
 @bp.route('/', methods=['POST'])
 def create_cat():
-    return 'create cat'
+    cat_info = request.get_json()
+
+    new_cat = Cat(name=cat_info['name'], rfid=cat_info['rfid'])
+
+    db.session.add(new_cat)
+    db.session.commit()
+    
+    return (new_cat.__json__(), 200)
 
 
 @bp.route('/<int:cat_id>', methods=['GET'])
