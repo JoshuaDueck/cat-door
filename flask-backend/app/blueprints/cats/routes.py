@@ -23,7 +23,8 @@ def create_cat():
 
 @bp.route('/<int:cat_id>', methods=['GET'])
 def get_cat(cat_id):
-    return 'cat {}'.format(cat_id)
+    cat = Cat.query.get(cat_id)
+    return (cat.__json__(), 200)
 
 
 @bp.route('/<int:cat_id>', methods=['POST'])
