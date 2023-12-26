@@ -1,6 +1,7 @@
 from flask import request
 from app.blueprints.main import bp
 from app.models.log_entry import LogEntry
+from app.models.cat import Cat
 from app.extensions import db
 
 
@@ -28,8 +29,13 @@ def lock_door():
 def scan():
     tag = request.get_json()
 
+    # Find the cat by rfid, with the tag id
+    cat = Cat.query.filter_by(rfid=tag.get('id')).first()
+
+    cat_id = None if cat is None else cat.id
+
     log_entry = LogEntry(
-        cat_id=tag.get('id'),
+        cat_id=cat_id,
         action='scan'
     )
     db.session.add(log_entry)
