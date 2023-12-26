@@ -7,4 +7,3 @@ git pull origin master
 git checkout $branch
 cd flask-backend
 flask db upgrade
-./start.sh
