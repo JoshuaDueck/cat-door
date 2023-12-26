@@ -6,4 +6,6 @@ git checkout master
 git pull origin master
 git checkout $branch
 cd flask-backend
+. .venv/bin/activate
 flask db upgrade
+deactivate
