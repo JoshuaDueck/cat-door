@@ -17,7 +17,7 @@ def create_cat():
 
     db.session.add(new_cat)
     db.session.commit()
-    
+
     return (new_cat.__json__(), 200)
 
 
