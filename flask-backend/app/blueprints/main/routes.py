@@ -15,7 +15,10 @@ def index():
 
 @bp.route('/door', methods=['GET'])
 def get_door():
-    return "Main Blueprint Door Path"
+    door_pin_status = GPIO.input(26)
+    door_open = (door_pin_status == GPIO.HIGH)
+
+    return ({'door_open': door_open}, 200)
 
 
 @bp.route('/door/unlock', methods=['POST'])
@@ -26,6 +29,20 @@ def unlock_door():
 @bp.route('/door/lock', methods=['POST'])
 def lock_door():
     return "Main Blueprint Door Lock Path"
+
+
+@bp.route('/door/open', methods=['POST'])
+def open_door():
+    GPIO.output(26, GPIO.HIGH)
+    print('Door is open!')
+    return ({'door_open': True}, 200)
+
+
+@bp.route('/door/close', methods=['POST'])
+def close_door():
+    GPIO.output(26, GPIO.LOW)
+    print('Door is closed!')
+    return ({'door_open': False}, 200)
 
 
 @bp.route('/door/scan', methods=['POST'])
