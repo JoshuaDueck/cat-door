@@ -1,3 +1,4 @@
+from flask import request
 from app.blueprints.main import bp
 
 
@@ -19,3 +20,9 @@ def unlock_door():
 @bp.route('/door/lock', methods=['POST'])
 def lock_door():
     return "Main Blueprint Door Lock Path"
+
+
+@bp.route('/door/scan', methods=['POST'])
+def scan():
+    tag = request.get_json()
+    return tag

@@ -1,6 +1,7 @@
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
 import time
+import requests
 
 
 try:
@@ -13,6 +14,9 @@ try:
         i += 1
 
         id, text = reader.read()
+        myobj = {'id': id, 'text': text}
+        r = requests.post('http://localhost:5001/api/v1/door/scan', json = myobj)
+        print(r.text)
         print(f"ID: {id}")
         print(f"Text: {text}")
         time.sleep(5)
