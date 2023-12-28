@@ -5,7 +5,7 @@ from app.models.cat import Cat
 from app.extensions import db
 import threading
 
-import RPi.GPIO as GPIO
+from app.utilities import GPIO
 import time
 
 @bp.route('/')

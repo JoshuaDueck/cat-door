@@ -6,7 +6,7 @@ from app.extensions import db, migrate
 from app.models.cat import Cat
 from app.models.log_entry import LogEntry
 
-import RPi.GPIO as GPIO
+from app.utilities import GPIO
 
 
 def create_app(config_class=Config):
