@@ -5,6 +5,7 @@ from app.extensions import db, migrate
 
 from app.models.cat import Cat
 from app.models.log_entry import LogEntry
+from app.models.door import Door
 
 from app.utilities import GPIO
 

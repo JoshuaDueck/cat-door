@@ -1,12 +1,15 @@
 from flask import request
 from app.blueprints.main import bp
-from app.models.log_entry import LogEntry
-from app.models.cat import Cat
 from app.extensions import db
 import threading
 
+from app.models.log_entry import LogEntry
+from app.models.cat import Cat
+from app.models.door import Door
+
 from app.utilities import GPIO
 import time
+
 
 @bp.route('/')
 def index():
@@ -17,18 +20,34 @@ def index():
 def get_door():
     door_pin_status = GPIO.input(26)
     door_open = (door_pin_status == GPIO.HIGH)
+    door_locked = Door.query.first().locked
+    door_blocked = Door.query.first().blocked
 
-    return ({'door_open': door_open}, 200)
+    return ({
+        'door_open': door_open,
+        'door_locked': door_locked,
+        'door_blocked': door_blocked
+    }, 200)
 
 
 @bp.route('/door/unlock', methods=['POST'])
 def unlock_door():
-    return "Main Blueprint Door Unlock Path"
+    try:
+        Door.query.first().unlock()
+    except Exception as e:
+        return ({'error': str(e)}, 500)
+
+    return ({'door_locked': False}, 200)
 
 
 @bp.route('/door/lock', methods=['POST'])
 def lock_door():
-    return "Main Blueprint Door Lock Path"
+    try:
+        Door.query.first().lock()
+    except Exception as e:
+        return ({'error': str(e)}, 500)
+
+    return ({'door_locked': True}, 200)
 
 
 @bp.route('/door/open', methods=['POST'])
@@ -48,12 +67,8 @@ def close_door():
 @bp.route('/door/scan', methods=['POST'])
 def scan():
     tag = request.get_json()
-
-    # Find the cat by rfid, with the tag id
     cat = Cat.query.filter_by(rfid=tag.get('id')).first()
-
     cat_id = None if cat is None else cat.id
-
     log_entry = LogEntry(
         cat_id=cat_id,
         action='scan'
