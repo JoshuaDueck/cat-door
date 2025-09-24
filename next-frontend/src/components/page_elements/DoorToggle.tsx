@@ -1,18 +1,11 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import ButtonGroup from "../buttons/ButtonGroup"
-import { getDoorState } from "@/services/DoorService";
+import { setDoorLock } from "@/services/DoorService";
 
-export default function DoorToggle({}:{}) {
-  const [locked, setLocked] = useState(false);
-
-  useEffect(() => {
-    const fetchDoorState = async () => {
-      const doorState = await getDoorState();
-      setLocked(doorState['data']['locked']);
-    }
-  });
+export default function DoorToggle() {
+  const lockDoor = useQuery({ queryKey: ['door'], queryFn: setDoorLock })
 
   return (
     <>
@@ -23,12 +16,12 @@ export default function DoorToggle({}:{}) {
           {
             label: "Locked",
             active: locked,
-            onClick: () => {setLocked(true)}
+            onClick: () => {}
           },
           {
             label: "Unlocked",
             active: !locked,
-            onClick: () => {setLocked(false)}
+            onClick: () => {}
           }
         ]}
       />
